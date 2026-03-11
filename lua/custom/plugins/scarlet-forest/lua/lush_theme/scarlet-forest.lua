@@ -46,7 +46,12 @@ local lush = require 'lush'
 local hsl = lush.hsl
 
 -- colors
-local background = hsl(313, 64, 7)
+local background
+if jit.os == "Windows" then
+  background = hsl(314, 62, 4)
+else
+  background = hsl(313, 64, 7)
+end
 local foreground = hsl(71, 36, 91)
 local scarlet = hsl(344, 76, 59)
 local orange = hsl(10, 90, 69)
