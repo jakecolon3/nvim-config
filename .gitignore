@@ -1,1 +1,3 @@
 lua/custom/plugins/init.lua
+lua/custom/plugins/scarlet-forest/lua/lush_theme/scarlet-forest.lua
+lazy-lock.json
