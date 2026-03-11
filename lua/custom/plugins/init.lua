@@ -3,7 +3,7 @@
 --
 -- See the kickstart.nvim README for more information
 if jit.os == "Windows" then THEME_DIR = 'C:\\Users\\AndroidGamer\\AppData\\Local\\nvim\\lua\\custom\\plugins\\scarlet-forest\\'
-else THEME_DIR = 'home/jake/.config/nvim/lua/custom/plugins/scarlet-forest/'
+else THEME_DIR = '/home/jake/.config/nvim/lua/custom/plugins/scarlet-forest/'
 end
 
 ---@module 'lazy'
