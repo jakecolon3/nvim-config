@@ -87,12 +87,22 @@ vim.o.shiftwidth = 2
 -- Clear highlights on search when pressing <Esc> in normal mode
 --  See `:help hlsearch`
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
+
+-- better c-d/c-u
 vim.keymap.set({ 'n', 'v' }, '<C-u>', '<C-u>zz')
 vim.keymap.set({ 'n', 'v' }, '<C-d>', '<C-d>zz')
+
+-- better indent
 vim.keymap.set('v', '>', '>gv')
 vim.keymap.set('v', '<', '<gv')
+
+-- change tab with alt+h/l
 vim.keymap.set({ 'n', 'v', 'i' }, '<M-h>', 'gT')
 vim.keymap.set({ 'n', 'v', 'i' }, '<M-l>', 'gt')
+
+-- disable scroll in insert mode (for trackpad)
+vim.keymap.set('i', '<ScrollWheelUp>', '<Nop>')
+vim.keymap.set('i', '<ScrollWheelDown>', '<Nop>')
 
 -- Diagnostic Config & Keymaps
 -- See :help vim.diagnostic.Opts
