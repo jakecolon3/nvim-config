@@ -104,5 +104,19 @@
             "\\end{notazione*}"
         ],
         "description": "Insert a theorem, whose style is already defined in the template. The serial number is automatically generated according to the section."
+    },
+    "Limite": {
+        "prefix": ["lim"],
+        "body": [
+            "\\lim_{${1:n}}\\to{${2:+}\\infty}$0"
+        ],
+        "description": "Limite"
+    },
+    "Somma": {
+        "prefix": ["nsum"],
+        "body": [
+            "\\sum_{${1:n=0}}^{${2:\\infty}}$0"
+        ],
+        "description": "Somma"
     }
 }
