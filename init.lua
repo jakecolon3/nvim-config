@@ -19,7 +19,7 @@ vim.o.number = true
 vim.o.relativenumber = true
 
 -- Enable mouse mode, can be useful for resizing splits for example!
-vim.o.mouse = 'a'
+vim.o.mouse = 'n'
 
 -- Don't show the mode, since it's already in the status line
 vim.o.showmode = false
@@ -79,7 +79,7 @@ vim.o.scrolloff = 10
 vim.o.confirm = true
 
 vim.o.expandtab = true
-vim.o.shiftwidth = 2
+vim.o.shiftwidth = 4
 
 -- [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
@@ -91,18 +91,26 @@ vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 -- better c-d/c-u
 vim.keymap.set({ 'n', 'v' }, '<C-u>', '<C-u>zz')
 vim.keymap.set({ 'n', 'v' }, '<C-d>', '<C-d>zz')
+--
+-- better {/}
+vim.keymap.set({ 'n', 'v' }, '{', '{zz')
+vim.keymap.set({ 'n', 'v' }, '}', '}zz')
 
 -- better indent
 vim.keymap.set('v', '>', '>gv')
 vim.keymap.set('v', '<', '<gv')
 
 -- change tab with alt+h/l
-vim.keymap.set({ 'n', 'v', 'i' }, '<M-h>', 'gT')
-vim.keymap.set({ 'n', 'v', 'i' }, '<M-l>', 'gt')
+vim.keymap.set({ 'n', 'v' }, '<M-h>', 'gT')
+vim.keymap.set({ 'n', 'v' }, '<M-l>', 'gt')
 
 -- disable scroll in insert mode (for trackpad)
 vim.keymap.set('i', '<ScrollWheelUp>', '<Nop>')
 vim.keymap.set('i', '<ScrollWheelDown>', '<Nop>')
+
+-- split window and open terminal
+vim.keymap.set('n', '<C-w>t', '<C-w>s<cmd>term<CR>', { desc = "Open terminal in new window" })
+
 
 -- Diagnostic Config & Keymaps
 -- See :help vim.diagnostic.Opts
