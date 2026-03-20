@@ -10,12 +10,16 @@ vim.g.have_nerd_font = true
 --# netrw opts
 -- sets the size in percentage of the window created when splitting
 vim.g.netrw_winsize = 80
+
 -- disables the banner by default (I to re-enable it)
-vim.g.netrw_banner = 0
+-- bugged with wayland so it has to be off for now
+-- vim.g.netrw_banner = 0
+--
 -- sets the default <cr> behaviour to "use the last accessed window" (splits if none are open)
 vim.g.netrw_browse_split = 4
+
 -- freaks out if this is on default
-vim.g.netrw_clipboard = 0
+-- vim.g.netrw_clipboard = 0
 
 -- [[ Setting options ]]
 -- See `:help vim.o`
@@ -38,7 +42,8 @@ vim.o.showmode = false
 --  Schedule the setting after `UiEnter` because it can increase startup-time.
 --  Remove this option if you want your OS clipboard to remain independent.
 --  See `:help 'clipboard'`
--- vim.schedule(function() vim.o.clipboard = 'unnamedplus' end)
+-- netrw banner off makes this fucky
+vim.schedule(function() vim.o.clipboard = 'unnamedplus' end)
 
 -- Enable break indent
 vim.o.breakindent = true
