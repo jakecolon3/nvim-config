@@ -12,6 +12,7 @@ return {
   {
     'rktjmp/lush.nvim',
     { dir = THEME_DIR, lazy = true },
+    -- config = vim.cmd.colorscheme 'scarlet-forest',
   },
 
   {

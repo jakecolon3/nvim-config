@@ -105,8 +105,8 @@ vim.keymap.set({ 'n', 'v' }, '<M-h>', 'gT')
 vim.keymap.set({ 'n', 'v' }, '<M-l>', 'gt')
 
 -- disable scroll in insert mode (for trackpad)
-vim.keymap.set('i', '<ScrollWheelUp>', '<Nop>')
-vim.keymap.set('i', '<ScrollWheelDown>', '<Nop>')
+-- vim.keymap.set('i', '<ScrollWheelUp>', '<Nop>')
+-- vim.keymap.set('i', '<ScrollWheelDown>', '<Nop>')
 
 -- split window and open terminal
 vim.keymap.set('n', '<C-w>t', '<C-w>s<cmd>term<CR>', { desc = "Open terminal in new window" })
@@ -547,7 +547,7 @@ require('lazy').setup({
       local servers = {
         -- clangd = {},
         -- gopls = {},
-        pyright = {},
+        -- pyright = {},
         -- rust_analyzer = {},
         --
         -- Some languages (like typescript) have entire language plugins that can be useful:
@@ -677,7 +677,10 @@ require('lazy').setup({
           {
             'rafamadriz/friendly-snippets',
             config = function()
-              require('luasnip.loaders.from_vscode').lazy_load({ include = {'tex'}, })
+              require('luasnip.loaders.from_lua').lazy_load({
+                -- include = {'tex'},
+                paths = { "./lua/custom/snippets/" },
+              })
             end,
           },
         },
@@ -922,7 +925,6 @@ require('lazy').setup({
 })
 
 vim.cmd.colorscheme 'scarlet-forest'
-require("luasnip.loaders.from_vscode").lazy_load({ paths = { "./lua/my-snippets/" } })
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
