@@ -7,6 +7,16 @@ vim.g.maplocalleader = ' '
 -- Set to true if you have a Nerd Font installed and selected in the terminal
 vim.g.have_nerd_font = true
 
+--# netrw opts
+-- sets the size in percentage of the window created when splitting
+vim.g.netrw_winsize = 80
+-- disables the banner by default (I to re-enable it)
+vim.g.netrw_banner = 0
+-- sets the default <cr> behaviour to "use the last accessed window" (splits if none are open)
+vim.g.netrw_browse_split = 4
+-- freaks out if this is on default
+vim.g.netrw_clipboard = 0
+
 -- [[ Setting options ]]
 -- See `:help vim.o`
 -- NOTE: You can change these options as you wish!
@@ -28,7 +38,7 @@ vim.o.showmode = false
 --  Schedule the setting after `UiEnter` because it can increase startup-time.
 --  Remove this option if you want your OS clipboard to remain independent.
 --  See `:help 'clipboard'`
-vim.schedule(function() vim.o.clipboard = 'unnamedplus' end)
+-- vim.schedule(function() vim.o.clipboard = 'unnamedplus' end)
 
 -- Enable break indent
 vim.o.breakindent = true
@@ -104,9 +114,19 @@ vim.keymap.set('v', '<', '<gv')
 vim.keymap.set({ 'n', 'v' }, '<M-h>', 'gT')
 vim.keymap.set({ 'n', 'v' }, '<M-l>', 'gt')
 
+-- remap netrw c-l so it doesn't collide with window keybinds
+vim.api.nvim_create_autocmd({ 'FileType' }, {
+  pattern = { 'netrw' },
+  callback = function()
+    vim.keymap.del('n', '<C-l>', { buffer = true })
+    vim.keymap.set('n', '<C-l>', '<C-w>l', { remap = true, buffer = true })
+    vim.keymap.set('n', '<C-M-l>', '<cmd>Ex<CR>', { buffer = true })
+  end
+})
+
 -- disable scroll in insert mode (for trackpad)
--- vim.keymap.set('i', '<ScrollWheelUp>', '<Nop>')
--- vim.keymap.set('i', '<ScrollWheelDown>', '<Nop>')
+-- vim.keymap.del('i', '<ScrollWheelUp>')
+-- vim.keymap.del('i', '<ScrollWheelDown>')
 
 -- split window and open terminal
 vim.keymap.set('n', '<C-w>t', '<C-w>s<cmd>term<CR>', { desc = "Open terminal in new window" })
