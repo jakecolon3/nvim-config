@@ -31,6 +31,10 @@ local function mirror(args, parent, user_args)
     return args[1][1]
 end
 
+local function captures(_, snip)
+    return snip.captures
+end
+
 ls.setup({
     enable_autosnippets = true,
     update_events = "TextChanged,TextChangedI",
@@ -42,28 +46,35 @@ ls.add_snippets("all", {
     -- operations
     -- limit
     s({
-        trig = "lim"
+        trig = "[\\]?lim",
+        trigEngine = "pattern",
     }, fmta("\\lim_{<>\\to<>}", {
                 i(1, "n"), i(2, "+\\infty") })
     ),
 
     -- sum
     s({
-        trig = "sum"
+        trig = "[\\]?sum",
+        trigEngine = "pattern",
     }, fmta("\\sum_{<>}^{<>}", {
                 i(1, "n=0"), i(2, "+\\infty") })
     ),
 
     -- integral
     s({
-        trig = "integrale"
+        trig = "[\\]?int",
+        name = "integrale",
+        trigEngine = "pattern",
+        -- wordTrig = false,
+        priority = 1001,
     }, fmta("\\int_{<>}^{<>}", {
                 i(1, "a"), i(2, "b") })
     ),
 
     -- span
     s({
-        trig = "span"
+        trig = "[\\]?span",
+        trigEngine = "pattern",
     }, fmta("\\Span{<>}", { i(1, "a") })
     ),
 
@@ -84,7 +95,8 @@ ls.add_snippets("all", {
 
     -- begin/end env
     s({
-        trig = "begin",
+        trig = "[\\]?begin",
+        trigEngine = "pattern",
     },
         fmta(
             [[
@@ -98,6 +110,7 @@ ls.add_snippets("all", {
     -- equation
     s({
         trig = "equazione",
+        priority = 1001,
     },
         fmta(
             [[
@@ -124,6 +137,7 @@ ls.add_snippets("all", {
     -- align
     s({
         trig = "align",
+        priority = 1001,
     },
         fmta(
             [[
@@ -150,6 +164,7 @@ ls.add_snippets("all", {
     -- gather
     s({
         trig = "gather",
+        priority = 1001,
     },
         fmta(
             [[
@@ -176,6 +191,7 @@ ls.add_snippets("all", {
     -- definition
     s({
         trig = "defn",
+        priority = 1001,
     },
         fmta(
             [[
@@ -294,21 +310,24 @@ ls.add_snippets("all", {
     -- text
     -- normal
     s({
-        trig = "text",
+        trig = "[\\]?text",
+        trigEngine = "pattern",
     },
         fmta("\\text{<>}", { i(1) })
     ),
 
     -- italic
     s({
-        trig = "italic",
+        trig = "[\\]?italic",
+        trigEngine = "pattern",
     },
         fmta("\\textit{<>}", { i(1) })
     ),
 
     -- text
     s({
-        trig = "bold",
+        trig = "[\\]?bold",
+        trigEngine = "pattern",
     },
         fmta("\\textbf{<>}", { i(1) })
     ),
@@ -348,12 +367,6 @@ ls.add_snippets("all", {
     ),
 
     -- variable mods
-    -- vec
-    s({
-        trig = "vec",
-        },
-        fmta("\\vec{<>}", { i(1) })
-    ),
 
     -- constants and such
     -- field
@@ -363,19 +376,6 @@ ls.add_snippets("all", {
         t("\\mathbb{K}")
     ),
 
-    -- lambda
-    s({
-        trig = "lambda",
-        },
-        t("\\lambda")
-    ),
-
-    -- epsilon
-    s({
-        trig = "epsilon",
-        },
-        t("\\varepsilon")
-    ),
 })
 
 ls.add_snippets("all", {
@@ -405,15 +405,29 @@ ls.add_snippets("all", {
         t("}")
     }),
 
-    -- "regex" fraction
+    -- fraction that matches a block of text
     s({
         trig = "(%S*)//",
         trigEngine = "pattern",
         wordTrig = false,
-        -- regTrig = true,
     }, {
         f(function(_, snip)
             return "\\frac{" .. snip.captures[1] .. "}{"
+        end, {}),
+        i(1),
+        t("}")
+    }),
+
+    -- fraction that matches parentheses
+    s({
+        trig = "(%(.*%))//",
+        trigEngine = "pattern",
+        wordTrig = false,
+        priority = 1001,
+        -- regTrig = true,
+    }, {
+        f(function(_, snip)
+            return "\\frac{" .. string.sub(snip.captures[1], 2, -2) .. "}{"
         end, {}),
         i(1),
         t("}")
@@ -436,6 +450,64 @@ ls.add_snippets("all", {
             { i(1) })
     ),
 
+    -- vec
+    s({
+        trig = "vec",
+        -- wordTrig = false,
+        },
+        fmta("\\vec{<>}", { i(1) })
+    ),
+
+    -- \vec, so \vec doesn't expand to \\vec
+    s({
+        trig = "\\vec",
+        priority = 1002,
+        -- wordTrig = false,
+        },
+        fmta("\\vec{<>}", { i(1) })
+    ),
+
+    -- *vec, matches non-spaces and puts them in the brackets
+    s({
+        -- trig = "vec",
+        trig = "([%S*]+)vec",
+        trigEngine = "pattern",
+        priority = 1001,
+        -- wordTrig = false,
+        -- },
+        -- fmta("\\vec{<>}", {
+        --     f(function(_, snip)
+        --             return "\\vec{" .. snip.captures[1] .. "}"
+        --         end, {})
+        -- })
+        -- }, fmta("\\vec{<>}"),
+        }, {
+            t("\\vec{"),
+            d(1, function(_, snip)
+                return sn(nil, { i(1, snip.captures[1]) })
+            end
+            ),
+            t("}")
+        }
+    ),
+
+    -- variables
+    -- lambda
+    s({
+        trig = "[\\]?lamb",
+        trigEngine = "pattern",
+        },
+        t("\\lambda")
+    ),
+
+    -- epsilon
+    s({
+        trig = "[\\]?eps",
+        trigEngine = "pattern",
+        },
+        t("\\varepsilon")
+    ),
+
 }, {
-        type = "autosnippets",
+    type = "autosnippets",
 })
