@@ -853,7 +853,7 @@ require('lazy').setup({
         },
       }
 
-      -- require('mini.files').setup()
+      require('mini.files').setup()
 
       require('mini.align').setup()
       -- Simple and easy statusline.
