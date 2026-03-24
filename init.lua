@@ -7,19 +7,20 @@ vim.g.maplocalleader = ' '
 -- Set to true if you have a Nerd Font installed and selected in the terminal
 vim.g.have_nerd_font = true
 
---# netrw opts
+-- # netrw opts
 -- sets the size in percentage of the window created when splitting
 vim.g.netrw_winsize = 80
 
 -- disables the banner by default (I to re-enable it)
 -- bugged with wayland so it has to be off for now
 -- vim.g.netrw_banner = 0
---
--- sets the default <cr> behaviour to "use the last accessed window" (splits if none are open)
-vim.g.netrw_browse_split = 4
 
 -- freaks out if this is on default
 -- vim.g.netrw_clipboard = 0
+
+-- sets the default <cr> behaviour to "use the last accessed window" (splits if none are open)
+vim.g.netrw_browse_split = 4
+
 
 -- [[ Setting options ]]
 -- See `:help vim.o`
@@ -110,7 +111,7 @@ vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 -- better c-d/c-u
 vim.keymap.set({ 'n', 'v' }, '<C-u>', '<C-u>zz')
 vim.keymap.set({ 'n', 'v' }, '<C-d>', '<C-d>zz')
---
+
 -- better {/}
 vim.keymap.set({ 'n', 'v' }, '{', '{zz')
 vim.keymap.set({ 'n', 'v' }, '}', '}zz')
@@ -123,23 +124,16 @@ vim.keymap.set('v', '<', '<gv')
 vim.keymap.set({ 'n', 'v' }, '<M-h>', 'gT')
 vim.keymap.set({ 'n', 'v' }, '<M-l>', 'gt')
 
--- remap netrw c-l so it doesn't collide with window keybinds
-vim.api.nvim_create_autocmd({ 'FileType' }, {
-  pattern = { 'netrw' },
-  callback = function()
-    vim.keymap.del('n', '<C-l>', { buffer = true })
-    vim.keymap.set('n', '<C-l>', '<C-w>l', { remap = true, buffer = true })
-    vim.keymap.set('n', '<C-M-l>', '<cmd>Ex<CR>', { buffer = true })
-  end
-})
+-- # mini.files
+local minifiles_toggle = function()
+  if not MiniFiles.close() then MiniFiles.open() end
+end
 
-
--- disable scroll in insert mode (for trackpad)
--- vim.keymap.del('i', '<ScrollWheelUp>')
--- vim.keymap.del('i', '<ScrollWheelDown>')
+-- open and close
+vim.keymap.set('n', '<leader>f', minifiles_toggle, { desc = 'Toggle mini.files' })
 
 -- split window and open terminal
-vim.keymap.set('n', '<C-w>t', '<C-w>s<cmd>term<CR>', { desc = "Open terminal in new window" })
+vim.keymap.set('n', '<C-w>t', '<C-w>s<cmd>term<CR>', { desc = 'Open terminal in new window' })
 
 
 -- Diagnostic Config & Keymaps
@@ -209,6 +203,16 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
   local out = vim.fn.system { 'git', 'clone', '--filter=blob:none', '--branch=stable', lazyrepo, lazypath }
   if vim.v.shell_error ~= 0 then error('Error cloning lazy.nvim:\n' .. out) end
 end
+
+-- remap netrw c-l so it doesn't collide with window keybinds
+vim.api.nvim_create_autocmd({ 'FileType' }, {
+  pattern = { 'netrw' },
+  callback = function()
+    vim.keymap.del('n', '<C-l>', { buffer = true })
+    vim.keymap.set('n', '<C-l>', '<C-w>l', { remap = true, buffer = true })
+    vim.keymap.set('n', '<C-M-l>', '<cmd>Ex<CR>', { buffer = true })
+  end
+})
 
 ---@type vim.Option
 local rtp = vim.opt.rtp
@@ -853,7 +857,7 @@ require('lazy').setup({
         },
       }
 
-      require('mini.files').setup()
+      require('mini.files').setup({ windows = { preview = true } })
 
       require('mini.align').setup()
       -- Simple and easy statusline.
