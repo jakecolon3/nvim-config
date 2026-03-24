@@ -22,6 +22,7 @@ local fmt = require("luasnip.extras.fmt").fmt
 local fmta = require("luasnip.extras.fmt").fmta
 -- local conds = require("luasnip.extras.expand_conditions")
 -- local postfix = require("luasnip.extras.postfix").postfix
+-- // TODO migrate to postfix snippets
 local types = require("luasnip.util.types")
 -- local parse = require("luasnip.util.parser").parse_snippet
 -- local ms = ls.multi_snippet

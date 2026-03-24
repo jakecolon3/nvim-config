@@ -853,6 +853,8 @@ require('lazy').setup({
         },
       }
 
+      -- require('mini.files').setup()
+
       require('mini.align').setup()
       -- Simple and easy statusline.
       --  You could remove this setup call if you don't like it,
