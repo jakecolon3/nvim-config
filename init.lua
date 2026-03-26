@@ -125,8 +125,14 @@ vim.keymap.set({ 'n', 'v' }, '<M-h>', 'gT')
 vim.keymap.set({ 'n', 'v' }, '<M-l>', 'gt')
 
 -- # mini.files
+
+-- opens at current buffer directory
+-- https://www.reddit.com/r/neovim/comments/1fzfiex/open_minifiles_on_current_directory_focused_on/
 local minifiles_toggle = function()
-  if not MiniFiles.close() then MiniFiles.open() end
+  local MiniFiles = require'mini.files'
+  local _ = MiniFiles.close()
+    or MiniFiles.open(vim.api.nvim_buf_get_name(0), false)
+  MiniFiles.reveal_cwd()
 end
 
 -- open and close
@@ -592,6 +598,17 @@ require('lazy').setup({
 
         jdtls = {
           filetypes = { 'java' },
+          root_dir = vim.fs.root(0, {'gradlew', '.git', 'mvnw'}),
+
+          settings = {
+            ['java.settings.url'] = vim.fn.stdpath('data') .. '/mason/packages/jdtls/settings.pref'
+            -- java = {
+            --   compiler = {
+            --     taskTags       = "",
+            --     taskPriorities = "",
+            --   },
+            -- },
+          },
         },
 
         stylua = {}, -- Used to format Lua code
