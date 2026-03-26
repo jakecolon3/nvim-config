@@ -7,6 +7,7 @@ return {
       -- VimTeX configuration goes here, e.g.
       vim.g.vimtex_imaps_enabled = 0
       vim.g.vimtex_view_method = 'zathura'
+      vim.g.vimtex_quickfix_ignore_filters = {'Overfull', 'Underfull'}
     end,
   },
 }
