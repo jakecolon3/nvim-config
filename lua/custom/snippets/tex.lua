@@ -44,7 +44,7 @@ ls.setup({
 
 ls.add_snippets("all", {
 
-    -- operations
+    -- # operations
     -- limit
     s({
         trig = "[\\]?lim",
@@ -80,7 +80,7 @@ ls.add_snippets("all", {
     ),
 
 
-    -- envs
+    -- # envs
     -- matrix
     s({
         trig = "matrix",
@@ -131,6 +131,19 @@ ls.add_snippets("all", {
             \begin{equation*}
                 <>
             \end{equation*}
+            ]],
+            { i(1) })
+    ),
+
+    -- cases
+    s({
+        trig = "cases",
+    },
+        fmta(
+            [[
+            \begin{cases}
+                <>
+            \end{cases}
             ]],
             { i(1) })
     ),
@@ -308,7 +321,7 @@ ls.add_snippets("all", {
             { i(1) })
     ),
 
-    -- text
+    -- # text
     -- normal
     s({
         trig = "[\\]?text",
@@ -337,10 +350,29 @@ ls.add_snippets("all", {
     -- singular set
     s({
         trig = "insieme"
-    }, fmta("\\{<>\\}", { i(1, "a") })
+    }, fmta("\\{<>\\}", { i(1) })
     ),
 
-    -- sets
+    -- # sections
+    -- section
+    s({
+        trig = "section"
+    }, fmta("\\section{<>}", { i(1, "a") })
+    ),
+
+    -- subsection
+    s({
+        trig = "sub"
+    }, fmta("\\subsection{<>}", { i(1, "a") })
+    ),
+
+    -- subsubsection
+    s({
+        trig = "subs"
+    }, fmta("\\subsubsection{<>}", { i(1, "a") })
+    ),
+
+    -- # sets
     s({
         trig = "reali",
         },
@@ -367,14 +399,21 @@ ls.add_snippets("all", {
         t("\\mathbb{C}")
     ),
 
-    -- variable mods
+    -- # variable mods
 
-    -- constants and such
+    -- # constants and such
     -- field
     s({
         trig = "campo",
         },
         t("\\mathbb{K}")
+    ),
+
+    -- null vector
+    s({
+        trig = "0_",
+        },
+        t("\\underline{0}")
     ),
 
 })
@@ -492,7 +531,7 @@ ls.add_snippets("all", {
         }
     ),
 
-    -- variables
+    -- # variables
     -- lambda
     s({
         trig = "[\\]?lamb",
