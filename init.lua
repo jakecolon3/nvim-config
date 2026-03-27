@@ -601,7 +601,7 @@ require('lazy').setup({
           root_dir = vim.fs.root(0, {'gradlew', '.git', 'mvnw'}),
 
           settings = {
-            ['java.settings.url'] = vim.fn.stdpath('data') .. '/mason/packages/jdtls/settings.pref'
+            ['java.settings.url'] = vim.fn.stdpath('config') .. '/settings.pref'
             -- java = {
             --   compiler = {
             --     taskTags       = "",
