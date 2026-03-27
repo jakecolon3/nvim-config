@@ -63,13 +63,13 @@ ls.add_snippets("all", {
 
     -- integral
     s({
-        trig = "[\\]?int",
+        trig = "[\\]?integrale",
         name = "integrale",
         trigEngine = "pattern",
         -- wordTrig = false,
         priority = 1001,
-    }, fmta("\\int_{<>}^{<>}", {
-                i(1, "a"), i(2, "b") })
+    }, fmta("\\int_{<>}^{<>} <> dx", {
+                i(1, "a"), i(2, "b"), i(3, "f(x)") })
     ),
 
     -- span
