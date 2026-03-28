@@ -131,7 +131,7 @@ vim.keymap.set({ 'n', 'v' }, '<M-l>', 'gt')
 local minifiles_toggle = function()
   local MiniFiles = require'mini.files'
   local _ = MiniFiles.close()
-    or MiniFiles.open(vim.api.nvim_buf_get_name(0), false)
+    or MiniFiles.open(vim.api.nvim_buf_get_name(0))
   MiniFiles.reveal_cwd()
 end
 
@@ -217,6 +217,14 @@ vim.api.nvim_create_autocmd({ 'FileType' }, {
     vim.keymap.del('n', '<C-l>', { buffer = true })
     vim.keymap.set('n', '<C-l>', '<C-w>l', { remap = true, buffer = true })
     vim.keymap.set('n', '<C-M-l>', '<cmd>Ex<CR>', { buffer = true })
+  end
+})
+
+-- set conceallevel in tex files
+vim.api.nvim_create_autocmd({ 'FileType' }, {
+  pattern = { 'tex' },
+  callback = function()
+    vim.o.conceallevel = 2
   end
 })
 
