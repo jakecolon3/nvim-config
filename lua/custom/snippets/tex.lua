@@ -81,6 +81,32 @@ ls.add_snippets("all", {
 
 
     -- # envs
+    -- itemize
+    s({
+        trig = "itemize",
+    },
+        fmta(
+            [[
+            \begin{itemize}
+                \item <>
+            \end{itemize}
+            ]],
+            { i(1) })
+    ),
+
+    -- enumerate
+    s({
+        trig = "enumerate",
+    },
+        fmta(
+            [[
+            \begin{enumerate}
+                \item <>
+            \end{enumerate}
+            ]],
+            { i(1) })
+    ),
+
     -- matrix
     s({
         trig = "matrix",
@@ -307,6 +333,45 @@ ls.add_snippets("all", {
             { i(1) })
     ),
 
+    -- notazione
+    s({
+        trig = "notazione",
+    },
+        fmta(
+            [[
+            \begin{notazione}
+                <>
+            \end{notazione}
+            ]],
+            { i(1) })
+    ),
+
+    -- esercizio
+    s({
+        trig = "esercizio",
+    },
+        fmta(
+            [[
+            \begin{esercizio}
+                <>
+            \end{esercizio}
+            ]],
+            { i(1) })
+    ),
+
+    -- dimostrazione
+    s({
+        trig = "dimostrazione",
+    },
+        fmta(
+            [[
+            \begin{dimostrazione}
+                <>
+            \end{dimostrazione}
+            ]],
+            { i(1) })
+    ),
+
 
     -- display math
     s({
@@ -354,6 +419,12 @@ ls.add_snippets("all", {
     ),
 
     -- # sections
+    -- chapter
+    s({
+        trig = "chapter"
+    }, fmta("\\chapter{<>}", { i(1, "a") })
+    ),
+
     -- section
     s({
         trig = "section"
