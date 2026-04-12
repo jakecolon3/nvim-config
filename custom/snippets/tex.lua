@@ -487,6 +487,16 @@ ls.add_snippets("all", {
         t("\\underline{0}")
     ),
 
+    -- underline
+    s({
+        trig = "[\\]?underline",
+        trigEngine = "pattern",
+        wordTrig = false,
+    }, fmta(
+            "\\underline{<>}",
+            { i(1) })
+    ),
+
 })
 
 ls.add_snippets("all", {
@@ -566,14 +576,6 @@ ls.add_snippets("all", {
         trig = "mcal",
     }, fmta(
             "\\mathcal{<>}",
-            { i(1) })
-    ),
-
-    -- underline
-    s({
-        trig = "underline",
-    }, fmta(
-            "\\underline{<>}",
             { i(1) })
     ),
 
