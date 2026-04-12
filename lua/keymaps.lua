@@ -21,7 +21,6 @@ vim.keymap.set({ 'n', 'v' }, '<M-h>', 'gT')
 vim.keymap.set({ 'n', 'v' }, '<M-l>', 'gt')
 
 -- # mini.files
-
 -- opens at current buffer directory
 -- https://www.reddit.com/r/neovim/comments/1fzfiex/open_minifiles_on_current_directory_focused_on/
 local minifiles_toggle = function()
@@ -31,12 +30,16 @@ local minifiles_toggle = function()
   MiniFiles.reveal_cwd()
 end
 
+
 -- open and close
 vim.keymap.set('n', '<leader>f', minifiles_toggle, { desc = 'Toggle mini.files' })
 
 -- split window and open terminal
 vim.keymap.set('n', '<C-w>t', '<C-w>s<cmd>term<CR>', { desc = 'Open terminal in new window' })
 
+-- # luasnip
+-- clear luasnip queue
+vim.keymap.set('n', '<Esc><Esc>', function() require('luasnip').unlink_current() end)
 
 -- Diagnostic Config & Keymaps
 -- See :help vim.diagnostic.Opts
