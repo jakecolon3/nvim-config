@@ -561,19 +561,83 @@ ls.add_snippets("all", {
             { i(1) })
     ),
 
-    -- vec
+    -- mathcal
     s({
-        trig = "vec",
-        -- wordTrig = false,
-        },
-        fmta("\\vec{<>}", { i(1) })
+        trig = "mcal",
+    }, fmta(
+            "\\mathcal{<>}",
+            { i(1) })
     ),
+
+    -- underline
+    s({
+        trig = "underline",
+    }, fmta(
+            "\\underline{<>}",
+            { i(1) })
+    ),
+
+    -- hat
+    s({
+        trig = "[\\]?hat",
+        trigEngine = "pattern",
+        wordTrig = false,
+        },
+        fmta("\\hat{<>}", { i(1) })
+    ),
+
+    -- capturing hat
+    s({
+        trig = "([%S*]+)hat",
+        trigEngine = "pattern",
+        priority = 1001,
+        }, {
+            t("\\hat{"),
+            d(1, function(_, snip)
+                return sn(nil, { i(1, snip.captures[1]) })
+            end
+            ),
+            t("}")
+        }
+    ),
+
+    -- bar
+    s({
+        trig = "[\\]?bar",
+        trigEngine = "pattern",
+        wordTrig = false,
+        },
+        fmta("\\bar{<>}", { i(1) })
+    ),
+
+    -- capturing bar
+    s({
+        trig = "([%S*]+)bar",
+        trigEngine = "pattern",
+        priority = 1001,
+        }, {
+            t("\\bar{"),
+            d(1, function(_, snip)
+                return sn(nil, { i(1, snip.captures[1]) })
+            end
+            ),
+            t("}")
+        }
+    ),
+
+    -- -- vec
+    -- s({
+    --     trig = "vec",
+    --     -- wordTrig = false,
+    --     },
+    --     fmta("\\vec{<>}", { i(1) })
+    -- ),
 
     -- \vec, so \vec doesn't expand to \\vec
     s({
-        trig = "\\vec",
-        priority = 1002,
-        -- wordTrig = false,
+        trig = "[\\]?vec",
+        trigEngine = "pattern",
+        wordTrig = false,
         },
         fmta("\\vec{<>}", { i(1) })
     ),
