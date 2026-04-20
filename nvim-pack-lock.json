@@ -71,8 +71,8 @@
       "src": "https://github.com/nvim-lua/plenary.nvim"
     },
     "scarlet-forest": {
-      "rev": "57f3edf9ea465d11118a007678a556b0a460239a",
-      "src": "file:///home/jake/.config/nvim-pack/custom/scarlet-forest"
+      "rev": "1eb65b3c03194a6d670f6bc206d63c67b9273929",
+      "src": "jake@jake-git:~/repos/scarlet-forest.git"
     },
     "telescope-fzf-native.nvim": {
       "rev": "6fea601bd2b694c6f2ae08a6c6fab14930c60e2c",
