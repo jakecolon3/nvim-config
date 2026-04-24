@@ -9,11 +9,11 @@ end
 })
 
 vim.pack.add({
-    'nvim-lua/plenary.nvim',
-    'nvim-telescope/telescope-fzf-native.nvim',
-    'nvim-telescope/telescope-ui-select.nvim',
-    'nvim-tree/nvim-web-devicons',
-    'nvim-telescope/telescope.nvim',
+    'https://github.com/nvim-lua/plenary.nvim',
+    'https://github.com/nvim-telescope/telescope-fzf-native.nvim',
+    'https://github.com/nvim-telescope/telescope-ui-select.nvim',
+    'https://github.com/nvim-tree/nvim-web-devicons',
+    'https://github.com/nvim-telescope/telescope.nvim',
 })
 
 -- See `:help telescope` and `:help telescope.setup()`
