@@ -39,7 +39,11 @@ vim.keymap.set('n', '<C-w>t', '<C-w>s<cmd>term<CR>', { desc = 'Open terminal in 
 
 -- # luasnip
 -- clear luasnip queue
-vim.keymap.set('n', '<Esc><Esc>', function() require('luasnip').unlink_current() end)
+vim.keymap.set('n', '<Esc><Esc>', function()
+    while require'luasnip'.get_active_snip() do
+        require('luasnip').unlink_current()
+    end
+end)
 
 -- Diagnostic Config & Keymaps
 -- See :help vim.diagnostic.Opts
