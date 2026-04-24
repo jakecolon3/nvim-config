@@ -21,8 +21,7 @@ local r = ls.restore_node
 local fmt = require("luasnip.extras.fmt").fmt
 local fmta = require("luasnip.extras.fmt").fmta
 -- local conds = require("luasnip.extras.expand_conditions")
--- local postfix = require("luasnip.extras.postfix").postfix
--- TODO: migrate to postfix snippets
+local postfix = require("luasnip.extras.postfix").postfix
 local types = require("luasnip.util.types")
 -- local parse = require("luasnip.util.parser").parse_snippet
 -- local ms = ls.multi_snippet
@@ -45,7 +44,7 @@ ls.add_snippets("all", {
     s({
         trig = "[\\]?lim",
         trigEngine = "pattern",
-    }, fmta("\\lim_{<>\\to<>}", {
+    }, fmta("\\lim_{<>\\to <>}", {
                 i(1, "n"), i(2, "+\\infty") })
     ),
 
@@ -523,28 +522,25 @@ ls.add_snippets("all", {
     }),
 
     -- fraction that matches a block of text
-    s({
-        trig = "(%S*)//",
-        trigEngine = "pattern",
-        wordTrig = false,
+    postfix({
+        trig = "//",
+        match_pattern = "%S*",
     }, {
         f(function(_, snip)
-            return "\\frac{" .. snip.captures[1] .. "}{"
+            return "\\frac{" .. snip.env.POSTFIX_MATCH .. "}{"
         end, {}),
         i(1),
         t("}")
     }),
 
     -- fraction that matches parentheses
-    s({
-        trig = "(%(.*%))//",
-        trigEngine = "pattern",
-        wordTrig = false,
+    postfix({
+        trig = "//",
+        match_pattern = "%(.*%)",
         priority = 1001,
-        -- regTrig = true,
     }, {
         f(function(_, snip)
-            return "\\frac{" .. string.sub(snip.captures[1], 2, -2) .. "}{"
+            return "\\frac{" .. string.sub(snip.env.POSTFIX_MATCH, 2, -2) .. "}{"
         end, {}),
         i(1),
         t("}")
@@ -557,6 +553,13 @@ ls.add_snippets("all", {
     }, fmta(
             "\\frac{<>}{<>}",
             { i(1), i(2) })
+    ),
+
+    -- cdot
+    s({
+        trig = "**",
+        priority = 1001
+    }, { t("\\cdot") }
     ),
 
     -- mathbb
@@ -585,14 +588,14 @@ ls.add_snippets("all", {
     ),
 
     -- capturing hat
-    s({
-        trig = "([%S*]+)hat",
-        trigEngine = "pattern",
+    postfix({
+        trig = "hat",
+        match_pattern = "[%S*]+",
         priority = 1001,
         }, {
             t("\\hat{"),
             d(1, function(_, snip)
-                return sn(nil, { i(1, snip.captures[1]) })
+                return sn(nil, { i(1, snip.env.POSTFIX_MATCH) })
             end
             ),
             t("}")
@@ -609,29 +612,21 @@ ls.add_snippets("all", {
     ),
 
     -- capturing bar
-    s({
-        trig = "([%S*]+)bar",
-        trigEngine = "pattern",
+    postfix({
+        trig = "bar",
+        match_pattern = "[%S*]+",
         priority = 1001,
         }, {
             t("\\bar{"),
             d(1, function(_, snip)
-                return sn(nil, { i(1, snip.captures[1]) })
+                return sn(nil, { i(1, snip.env.POSTFIX_MATCH) })
             end
             ),
             t("}")
         }
     ),
 
-    -- -- vec
-    -- s({
-    --     trig = "vec",
-    --     -- wordTrig = false,
-    --     },
-    --     fmta("\\vec{<>}", { i(1) })
-    -- ),
-
-    -- \vec, so \vec doesn't expand to \\vec
+    -- vec
     s({
         trig = "[\\]?vec",
         trigEngine = "pattern",
@@ -641,26 +636,18 @@ ls.add_snippets("all", {
     ),
 
     -- *vec, matches non-spaces and puts them in the brackets
-    s({
-        -- trig = "vec",
-        trig = "([%S*]+)vec",
-        trigEngine = "pattern",
+    postfix({
+        trig = "vec",
+        match_pattern = "[%S*]+",
         priority = 1001,
-        -- wordTrig = false,
-        -- },
-        -- fmta("\\vec{<>}", {
-        --     f(function(_, snip)
-        --             return "\\vec{" .. snip.captures[1] .. "}"
-        --         end, {})
-        -- })
-        -- }, fmta("\\vec{<>}"),
         }, {
-            t("\\vec{"),
             d(1, function(_, snip)
-                return sn(nil, { i(1, snip.captures[1]) })
-            end
-            ),
-            t("}")
+                return sn(nil, {
+                    t("\\vec{"),
+                    i(1, snip.env.POSTFIX_MATCH),
+                    t("}"),
+                })
+            end),
         }
     ),
 
