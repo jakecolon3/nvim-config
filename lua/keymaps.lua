@@ -2,7 +2,13 @@
 
 -- Clear highlights on search when pressing <Esc> in normal mode
 --  See `:help hlsearch`
-vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
+-- also clears luasnip queue
+vim.keymap.set('n', '<Esc>', function()
+    vim.cmd('nohlsearch')
+    while require'luasnip'.get_active_snip() do
+        require('luasnip').unlink_current()
+    end
+end)
 
 -- better c-d/c-u
 vim.keymap.set({ 'n', 'v' }, '<C-u>', '<C-u>zz')
@@ -39,11 +45,7 @@ vim.keymap.set('n', '<C-w>t', '<C-w>s<cmd>term<CR>', { desc = 'Open terminal in 
 
 -- # luasnip
 -- clear luasnip queue
-vim.keymap.set('n', '<Esc><Esc>', function()
-    while require'luasnip'.get_active_snip() do
-        require('luasnip').unlink_current()
-    end
-end)
+-- moved to nohlsearch bind
 
 -- Diagnostic Config & Keymaps
 -- See :help vim.diagnostic.Opts
