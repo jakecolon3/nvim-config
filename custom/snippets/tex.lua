@@ -71,7 +71,13 @@ ls.add_snippets("all", {
     s({
         trig = "[\\]?span",
         trigEngine = "pattern",
-    }, fmta("\\Span{<>}", { i(1, "a") })
+    }, fmta("\\Span{<>}", { i(1) })
+    ),
+
+    -- xrightarrow
+    s({
+        trig = "xrightarrow",
+    }, fmta("\\xrightarrow{<>}", { i(1) })
     ),
 
 
@@ -575,6 +581,14 @@ ls.add_snippets("all", {
         trig = "mcal",
     }, fmta(
             "\\mathcal{<>}",
+            { i(1) })
+    ),
+
+    -- mathscr
+    s({
+        trig = "mscr",
+    }, fmta(
+            "\\mathscr{<>}",
             { i(1) })
     ),
 
