@@ -530,7 +530,7 @@ ls.add_snippets("all", {
     -- fraction that matches a block of text
     postfix({
         trig = "//",
-        match_pattern = "%S*",
+        match_pattern = "[^ ]-$",
     }, {
         f(function(_, snip)
             return "\\frac{" .. snip.env.POSTFIX_MATCH .. "}{"
@@ -555,7 +555,7 @@ ls.add_snippets("all", {
     -- empty fraction
     s({
         trig = "//",
-        priority = 1001
+        priority = 1001,
     }, fmta(
             "\\frac{<>}{<>}",
             { i(1), i(2) })
