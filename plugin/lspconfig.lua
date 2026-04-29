@@ -125,7 +125,17 @@ jdtls = {
   root_dir = vim.fs.root(0, {'gradlew', '.git', 'mvnw'}),
 
   settings = {
-    ['java.settings.url'] = vim.fn.stdpath('config') .. '/settings.pref'
+    -- list of settings that can go in that file:
+    -- https://github.com/eclipse-jdtls/eclipse.jdt.ls/wiki/Language-Server-Settings-&-Capabilities#java-compiler-options
+    ['java.settings.url'] = vim.fn.stdpath('config') .. '/settings.pref',
+    -- list of options:
+    -- https://github.com/eclipse-jdtls/eclipse.jdt.ls/wiki/Running-the-JAVA-LS-server-from-the-command-line#initialize-request
+    java = {
+        format = {
+            insertSpaces = true,
+            tabSize = 4,
+        }
+    },
     -- java = {
     --   compiler = {
     --     taskTags       = "",
