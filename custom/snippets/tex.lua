@@ -530,7 +530,8 @@ ls.add_snippets("all", {
     -- fraction that matches a block of text
     postfix({
         trig = "//",
-        match_pattern = "[^ ]-$",
+        match_pattern = "%S+$",
+        priority = 1001,
     }, {
         f(function(_, snip)
             return "\\frac{" .. snip.env.POSTFIX_MATCH .. "}{"
@@ -542,8 +543,8 @@ ls.add_snippets("all", {
     -- fraction that matches parentheses
     postfix({
         trig = "//",
-        match_pattern = "%(.*%)",
-        priority = 1001,
+        match_pattern = "%(.*%)?$",
+        priority = 1002,
     }, {
         f(function(_, snip)
             return "\\frac{" .. string.sub(snip.env.POSTFIX_MATCH, 2, -2) .. "}{"
@@ -555,7 +556,7 @@ ls.add_snippets("all", {
     -- empty fraction
     s({
         trig = "//",
-        priority = 1001,
+        priority = 1000,
     }, fmta(
             "\\frac{<>}{<>}",
             { i(1), i(2) })
@@ -604,7 +605,7 @@ ls.add_snippets("all", {
     -- capturing hat
     postfix({
         trig = "hat",
-        match_pattern = "[%S*]+",
+        match_pattern = "%S+$",
         priority = 1001,
         }, {
             t("\\hat{"),
@@ -628,7 +629,7 @@ ls.add_snippets("all", {
     -- capturing bar
     postfix({
         trig = "bar",
-        match_pattern = "[%S*]+",
+        match_pattern = "%S+$",
         priority = 1001,
         }, {
             t("\\bar{"),
@@ -652,7 +653,7 @@ ls.add_snippets("all", {
     -- *vec, matches non-spaces and puts them in the brackets
     postfix({
         trig = "vec",
-        match_pattern = "[%S*]+",
+        match_pattern = "%S+$",
         priority = 1001,
         }, {
             d(1, function(_, snip)
