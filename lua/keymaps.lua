@@ -40,8 +40,35 @@ end
 -- open and close
 vim.keymap.set('n', '<leader>f', minifiles_toggle, { desc = 'Toggle mini.files' })
 
+
+-- helper func for the split window with term command
+local function check_bufs_name(pattern)
+  for index, value in ipairs(vim.api.nvim_list_bufs()) do
+    if string.match(vim.api.nvim_buf_get_name(value), pattern) then
+      return value
+    end
+  end
+end
 -- split window and open terminal
-vim.keymap.set('n', '<C-w>t', '<C-w>s<cmd>term<CR>', { desc = 'Open terminal in new window' })
+-- toggles window if term buffer already exists
+vim.keymap.set('n', '<C-w>t', function()
+  local buf = check_bufs_name('^term://')
+  -- if current buffer is term
+  if string.match(vim.api.nvim_buf_get_name(0), '^term://') then
+    -- if current buffer is not the top window
+    if vim.api.nvim_win_get_number(0) ~= 1 then
+      -- close the window
+      vim.api.nvim_win_close(0, false)
+    end
+  elseif buf then
+    -- if there is a term buffer loaded open it
+    vim.api.nvim_open_win(buf, true, {split = 'below'})
+  else
+    -- create new term buffer
+    vim.api.nvim_cmd(vim.api.nvim_parse_cmd(':split +term', {}), {})
+  end
+end
+, { desc = 'Open terminal in new window' })
 
 -- # luasnip
 -- clear luasnip queue

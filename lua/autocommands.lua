@@ -27,6 +27,18 @@ vim.api.nvim_create_autocmd({ 'FileType' }, {
   end
 })
 
+-- enter terminal mode when first opening term buffer
+vim.api.nvim_create_autocmd({ 'TermOpen' }, {
+  pattern = { '*' },
+  command = 'startinsert'
+})
+
+-- enter terminal mode when entering term buffer
+vim.api.nvim_create_autocmd({ 'BufEnter' }, {
+  pattern = { 'term://*' },
+  command = 'startinsert'
+})
+
 -- godot language server
 vim.api.nvim_create_autocmd({ 'FileType' }, {
   pattern = { 'gd' },
