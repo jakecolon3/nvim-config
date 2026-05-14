@@ -9,39 +9,44 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   callback = function() vim.hl.on_yank() end,
 })
 
--- remap netrw c-l so it doesn't collide with window keybinds
-vim.api.nvim_create_autocmd({ 'FileType' }, {
-  pattern = { 'netrw' },
-  callback = function()
-    vim.keymap.del('n', '<C-l>', { buffer = true })
-    vim.keymap.set('n', '<C-l>', '<C-w>l', { remap = true, buffer = true })
-    vim.keymap.set('n', '<C-M-l>', '<cmd>Ex<CR>', { buffer = true })
-  end
+vim.api.nvim_create_autocmd({ 'TermOpen' }, {
+  desc = 'Enter terminal mode when a new terminal buffer is created',
+  pattern = { '*' },
+  group = vim.api.nvim_create_augroup('termwindow', { clear = false} ),
+  command = 'startinsert',
 })
 
--- set conceallevel in tex files
+vim.api.nvim_create_autocmd({ 'BufEnter' }, {
+  desc = 'Enter terminal mode when a terminal buffer is focused',
+  pattern = { 'term://*' },
+  group = vim.api.nvim_create_augroup('termwindow', { clear = false} ),
+  command = 'startinsert',
+
+})
+vim.api.nvim_create_autocmd({ 'VimEnter' }, {
+  desc = 'Set makeprg to "./run.sh" if it exists in cwd',
+  group = vim.api.nvim_create_augroup('jake', { clear = false} ),
+  callback = function()
+    if vim.uv.fs_stat('./run.sh') then
+      vim.cmd('set makeprg=./run.sh')
+    end
+  end,
+})
+
 vim.api.nvim_create_autocmd({ 'FileType' }, {
+  desc = 'Set conceallevel in tex files',
   pattern = { 'tex' },
+  group = 'filetypeplugin',
   callback = function()
     vim.o.conceallevel = 2
-  end
-})
-
--- enter terminal mode when first opening term buffer
-vim.api.nvim_create_autocmd({ 'TermOpen' }, {
-  pattern = { '*' },
-  command = 'startinsert'
-})
-
--- enter terminal mode when entering term buffer
-vim.api.nvim_create_autocmd({ 'BufEnter' }, {
-  pattern = { 'term://*' },
-  command = 'startinsert'
+  end,
 })
 
 -- godot language server
 vim.api.nvim_create_autocmd({ 'FileType' }, {
+  desc = 'Godot language server setup',
   pattern = { 'gd' },
+  group = 'filetypeplugin',
   callback = function()
     -- https://simondalvai.org/blog/godot-neovim/
     -- paths to check for project.godot file
