@@ -28,7 +28,7 @@ local types = require("luasnip.util.types")
 -- local k = require("luasnip.nodes.key_indexer").new_key
 
 local function mirror(args, parent, user_args)
-    return args[1][1]
+    return string.match(args[1][1], "^[%w%-]*")
 end
 
 ls.setup({
@@ -46,7 +46,7 @@ ls.add_snippets("all", {
         fmta(
             [[
             <<<>>>
-                <>
+              <>
             <</<>>>
             ]],
             { i(1), i(2), f(mirror, {1}, {}) })
