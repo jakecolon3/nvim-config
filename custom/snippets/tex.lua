@@ -541,9 +541,10 @@ ls.add_snippets("all", {
     }),
 
     -- fraction that matches parentheses
+    -- TODO: fix
     postfix({
         trig = "//",
-        match_pattern = "%(.*%)?$",
+        match_pattern = "%([%w%s\\{}%[%]]-%)?$",
         priority = 1002,
     }, {
         f(function(_, snip)
