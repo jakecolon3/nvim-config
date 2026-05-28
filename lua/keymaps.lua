@@ -14,10 +14,6 @@ end)
 vim.keymap.set({ 'n', 'v' }, '<C-u>', '<C-u>zz')
 vim.keymap.set({ 'n', 'v' }, '<C-d>', '<C-d>zz')
 
--- better {/}
-vim.keymap.set({ 'n', 'v' }, '{', '{zz')
-vim.keymap.set({ 'n', 'v' }, '}', '}zz')
-
 -- better indent
 vim.keymap.set('v', '>', '>gv')
 vim.keymap.set('v', '<', '<gv')
